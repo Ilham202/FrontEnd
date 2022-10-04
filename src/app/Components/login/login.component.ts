@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder,Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,9 @@ export class LoginComponent implements OnInit {
     password: new FormControl(),
   });
 
-  constructor( private formBuilder: FormBuilder,
+  constructor(
+    private loginService: LoginService,
+    private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router) { }
 
@@ -27,24 +30,21 @@ export class LoginComponent implements OnInit {
   errors: any;
 
   submit(): void {
-    console.log(this.form.getRawValue());
-    this.http
-      .post(`http://localhost:5001/authenticate`, this.form.getRawValue())
+
+    // console.log(this.form.getRawValue());
+    this.loginService.authenticate(this.form.getRawValue())
       .subscribe(
-        (res: any) => {
-          // console.log(res);
-          localStorage.setItem('token',res.jwtToken);
-          localStorage.setItem('uId', JSON.stringify(res.uid));
+        (response: any) => {
+          localStorage.setItem('token', response.jwtToken);
+          localStorage.setItem('uId', JSON.stringify(response.uid));
           this.router.navigate(['/home']);
         },
         (error) => {
           this.errors = 'Username or password is incorrect.';
-          console.log('issue');
+          // console.log('issue');
         },
-        () => {
-          // No errors, route to new page
-        }
       );
+
   }
 
 }

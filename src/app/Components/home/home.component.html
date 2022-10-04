@@ -22,7 +22,7 @@
     <div class="container" style="padding-bottom: 10px;padding-top: 10px;">
     <div class="get-quote">
       <div class="row">
-        <div class="col-md-12 d-flex">
+        <div class="col-md-12 d-flex" *ngIf="respData?.length!=0">
           <h3 id="quote">Compared Data</h3> 
          <button type="button" class="btn btn-primary ml-auto" (click)="ExportTOExcel()">Export To Excel</button>
         </div>

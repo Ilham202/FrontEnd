@@ -10,8 +10,7 @@ export class UploadFileService {
   token = localStorage.getItem('token');
 
   header = new HttpHeaders({ Authorization: 'Bearer ' + this.token });
-  requestOptions = { headers: this.header };
-  url = 'http://localhost:5001/comparetwosheets';
+
 
   constructor(private http: HttpClient) {
   }

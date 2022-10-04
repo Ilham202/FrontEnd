@@ -2,7 +2,7 @@ import { Component, OnInit,ElementRef, ViewChild } from '@angular/core';
 import { HttpEventType, HttpResponse,HttpClient } from '@angular/common/http';
 import { UploadFileService } from '../../services/upload-file.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router'; 
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface Emp{
   empId:String;
@@ -82,18 +82,17 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
   public ExportTOExcel():void{
-    console.log("&&&&");
+    // console.log("&&&&");
     this.uploadService.export()
     .subscribe(
       (response)=>{
         let fileName:string=response.headers.get('Content-Disposition')?.split(';')[1].split('=')[1]!;
-        console.log(fileName);
+
         let blob:Blob=response.body as Blob;
         let a= document.createElement('a');
         a.download=fileName;
         a.href= window.URL.createObjectURL(blob);
         a.click();
-        console.log(response);
 
       }
     );
